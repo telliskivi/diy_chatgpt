@@ -97,7 +97,7 @@ function initDb() {
 }
 
 function randomId() {
-  return crypto.randomUUID ? crypto.randomUUID() : require('crypto').randomUUID();
+  return crypto.randomUUID();
 }
 
 // ── Backends ──────────────────────────────────────────────────────────────────

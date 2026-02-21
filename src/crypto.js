@@ -2,7 +2,12 @@
 
 const crypto = require('crypto');
 
-const ENCRYPTION_KEY_RAW = process.env.ENCRYPTION_KEY || 'diy-chatgpt-dev-key-32chars-here!!';
+const ENCRYPTION_KEY_RAW = process.env.ENCRYPTION_KEY || (() => {
+  if (process.env.NODE_ENV === 'production') {
+    console.warn('[WARN] ENCRYPTION_KEY is not set. Using insecure default key. Set ENCRYPTION_KEY in production!');
+  }
+  return 'diy-chatgpt-dev-key-32chars-here!!';
+})();
 // Derive a 32-byte key using SHA-256
 const ENCRYPTION_KEY = crypto.createHash('sha256').update(ENCRYPTION_KEY_RAW).digest();
 const IV_LENGTH = 16;

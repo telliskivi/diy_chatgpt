@@ -44,7 +44,7 @@ router.post('/', upload.single('file'), async (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
     const result = await processFile(req.file.path, req.file.originalname, req.file.mimetype);
     // Clean up uploaded file after processing
-    try { fs.unlinkSync(req.file.path); } catch (_) {}
+    try { fs.unlinkSync(req.file.path); } catch (unlinkErr) { console.error('[upload] cleanup error:', unlinkErr.message); }
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });
