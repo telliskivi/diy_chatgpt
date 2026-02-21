@@ -40,7 +40,7 @@ module.exports = {
 };
 
 function searchTavily(query, max_results, apiKey) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const body = JSON.stringify({
       api_key: apiKey,
       query,
@@ -81,7 +81,7 @@ function searchTavily(query, max_results, apiKey) {
 }
 
 function searchSearXNG(query, max_results, baseUrl) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const u = new URL('/search', baseUrl);
     u.searchParams.set('q', query);
     u.searchParams.set('format', 'json');

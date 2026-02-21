@@ -32,7 +32,8 @@ function decrypt(text) {
     decrypted += decipher.final('utf8');
     return decrypted;
   } catch (e) {
-    return text; // return as-is if decrypt fails (plain text key)
+    // Decryption failed — return empty string to avoid leaking ciphertext
+    return '';
   }
 }
 
