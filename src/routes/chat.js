@@ -1,5 +1,6 @@
 'use strict';
 
+// Prevent infinite tool-call loops; after this many rounds the loop breaks and the last assistant message is returned as-is.
 const MAX_TOOL_ITERATIONS = 10;
 
 const express = require('express');

@@ -4,6 +4,7 @@ const https = require('https');
 const http = require('http');
 const { URL } = require('url');
 
+// Limit returned text to keep token usage reasonable while still providing useful context.
 const MAX_FETCH_CHARS = 5000;
 module.exports = {
   name: 'web_fetch',
