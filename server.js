@@ -16,8 +16,11 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Rate limiters
-const staticLimiter = rateLimit({ windowMs: 60_000, max: 300, standardHeaders: true, legacyHeaders: false });
-const apiLimiter = rateLimit({ windowMs: 60_000, max: 120, standardHeaders: true, legacyHeaders: false });
+const RATE_LIMIT_WINDOW_MS = parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000', 10);
+const RATE_LIMIT_STATIC = parseInt(process.env.RATE_LIMIT_STATIC || '300', 10);
+const RATE_LIMIT_API = parseInt(process.env.RATE_LIMIT_API || '120', 10);
+const staticLimiter = rateLimit({ windowMs: RATE_LIMIT_WINDOW_MS, max: RATE_LIMIT_STATIC, standardHeaders: true, legacyHeaders: false });
+const apiLimiter = rateLimit({ windowMs: RATE_LIMIT_WINDOW_MS, max: RATE_LIMIT_API, standardHeaders: true, legacyHeaders: false });
 
 // Static files
 app.use(staticLimiter, express.static(path.join(__dirname, 'public')));

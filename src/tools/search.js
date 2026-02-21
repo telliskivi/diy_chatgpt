@@ -70,7 +70,7 @@ function searchTavily(query, max_results, apiKey) {
           }));
           resolve(JSON.stringify({ results }));
         } catch (e) {
-          resolve(JSON.stringify({ error: 'Failed to parse Tavily response', raw: data }));
+          resolve(JSON.stringify({ error: `Tavily search failed: failed to parse response - ${e.message}`, raw: data }));
         }
       });
     });
@@ -106,7 +106,7 @@ function searchSearXNG(query, max_results, baseUrl) {
           }));
           resolve(JSON.stringify({ results }));
         } catch (e) {
-          resolve(JSON.stringify({ error: 'Failed to parse SearXNG response' }));
+          resolve(JSON.stringify({ error: `SearXNG search failed: failed to parse response - ${e.message}` }));
         }
       });
     });

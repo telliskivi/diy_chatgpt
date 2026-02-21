@@ -4,6 +4,7 @@ const https = require('https');
 const http = require('http');
 const { URL } = require('url');
 
+const MAX_FETCH_CHARS = 5000;
 module.exports = {
   name: 'web_fetch',
   description: 'Fetch the content of a web page and return it as plain text.',
@@ -68,7 +69,7 @@ function fetchUrl(urlStr, redirectCount = 0) {
         // Collapse whitespace
         text = text.replace(/\s{2,}/g, ' ').trim();
 
-        if (text.length > 5000) text = text.slice(0, 5000) + '... [truncated]';
+        if (text.length > MAX_FETCH_CHARS) text = text.slice(0, MAX_FETCH_CHARS) + '... [truncated]';
         resolve(text);
       });
     });

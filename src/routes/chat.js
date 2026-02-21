@@ -1,5 +1,7 @@
 'use strict';
 
+const MAX_TOOL_ITERATIONS = 10;
+
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
@@ -160,7 +162,6 @@ router.post('/', async (req, res) => {
     const toolDefs = getToolDefinitions(enabledTools);
 
     // Tool loop — cap at MAX_TOOL_ITERATIONS to prevent runaway loops
-    const MAX_TOOL_ITERATIONS = 10;
     let loopMessages = [...messagesForProvider];
     let assistantText = '';
 
