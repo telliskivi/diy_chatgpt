@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DIY ChatGPT</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div id="sidebar-header">
+        <div id="project-switcher-wrap">
+          <select id="project-select" title="Switch project"></select>
+          <button id="btn-manage-projects" title="Manage Projects">⚙</button>
+        </div>
+        <button id="btn-new-chat" title="New conversation">＋ New Chat</button>
+      </div>
+      <div id="conversation-list"></div>
+      <div id="sidebar-footer">
+        <button id="btn-settings">⚙ Settings</button>
+      </div>
+    </aside>
+
+    <!-- Main chat area -->
+    <main id="main">
+      <div id="topbar">
+        <div id="topbar-left">
+          <span id="current-project-label"></span>
+        </div>
+        <div id="topbar-right">
+          <select id="backend-select" title="Select backend"></select>
+          <select id="model-select" title="Select model"></select>
+        </div>
+      </div>
+
+      <div id="messages-container">
+        <div id="messages-list"></div>
+      </div>
+
+      <div id="input-area">
+        <div id="file-previews"></div>
+        <div id="input-row">
+          <label id="upload-label" title="Attach file">
+            📎
+            <input type="file" id="file-input" multiple accept=".txt,.md,.csv,.json,.xml,.js,.ts,.py,.java,.go,.rs,.c,.cpp,.h,.css,.html,.pdf,.png,.jpg,.jpeg,.webp" />
+          </label>
+          <textarea id="message-input" placeholder="Send a message..." rows="1"></textarea>
+          <button id="btn-send" title="Send">➤</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings — AI Backends</h2>
+        <button class="modal-close" data-modal="settings-modal">✕</button>
+      </div>
+      <div class="modal-body" id="settings-body"></div>
+    </div>
+  </div>
+
+  <!-- Project Management Modal -->
+  <div id="projects-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Manage Projects</h2>
+        <button class="modal-close" data-modal="projects-modal">✕</button>
+      </div>
+      <div class="modal-body" id="projects-body"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/markdown.js"></script>
+  <script src="/js/conversations.js"></script>
+  <script src="/js/projects.js"></script>
+  <script src="/js/settings.js"></script>
+  <script src="/js/chat.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
