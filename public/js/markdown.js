@@ -172,9 +172,10 @@
     text = text.replace(/~~(.+?)~~/g, '<del>$1</del>');
     // Links
     text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-    // Auto-links
+    // Auto-links (https/http only, URL-encode href to prevent injection)
     text = text.replace(/(https?:\/\/[^\s<]+)/g, (url) => {
-      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+      const safeUrl = url.replace(/"/g, '%22').replace(/'/g, '%27');
+      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${url}</a>`;
     });
     return text;
   }

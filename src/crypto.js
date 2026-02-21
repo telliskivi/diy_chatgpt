@@ -4,8 +4,9 @@ const crypto = require('crypto');
 
 const ENCRYPTION_KEY_RAW = process.env.ENCRYPTION_KEY || (() => {
   if (process.env.NODE_ENV === 'production') {
-    console.warn('[WARN] ENCRYPTION_KEY is not set. Using insecure default key. Set ENCRYPTION_KEY in production!');
+    throw new Error('ENCRYPTION_KEY environment variable must be set in production.');
   }
+  console.warn('[WARN] ENCRYPTION_KEY is not set. Using insecure default dev key.');
   return 'diy-chatgpt-dev-key-32chars-here!!';
 })();
 // Derive a 32-byte key using SHA-256

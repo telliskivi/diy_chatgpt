@@ -159,10 +159,10 @@ router.post('/', async (req, res) => {
 
     const toolDefs = getToolDefinitions(enabledTools);
 
-    // Tool loop
+    // Tool loop — cap at MAX_TOOL_ITERATIONS to prevent runaway loops
+    const MAX_TOOL_ITERATIONS = 8;
     let loopMessages = [...messagesForProvider];
     let assistantText = '';
-    const MAX_TOOL_ITERATIONS = 8;
 
     for (let iteration = 0; iteration < MAX_TOOL_ITERATIONS; iteration++) {
       let result;
