@@ -5,6 +5,7 @@ try { require('dotenv').config(); } catch (_) {}
 
 const express = require('express');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 const { initDb } = require('./src/db');
 
 const app = express();
@@ -14,18 +15,22 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+// Rate limiters
+const staticLimiter = rateLimit({ windowMs: 60_000, max: 300, standardHeaders: true, legacyHeaders: false });
+const apiLimiter = rateLimit({ windowMs: 60_000, max: 120, standardHeaders: true, legacyHeaders: false });
+
 // Static files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(staticLimiter, express.static(path.join(__dirname, 'public')));
 
 // API routes
-app.use('/api/chat', require('./src/routes/chat'));
-app.use('/api/backends', require('./src/routes/backends'));
-app.use('/api/projects', require('./src/routes/projects'));
-app.use('/api/conversations', require('./src/routes/conversations'));
-app.use('/api/upload', require('./src/routes/upload'));
+app.use('/api/chat', apiLimiter, require('./src/routes/chat'));
+app.use('/api/backends', apiLimiter, require('./src/routes/backends'));
+app.use('/api/projects', apiLimiter, require('./src/routes/projects'));
+app.use('/api/conversations', apiLimiter, require('./src/routes/conversations'));
+app.use('/api/upload', apiLimiter, require('./src/routes/upload'));
 
 // Fallback: serve index.html for any non-API route
-app.get('*', (req, res) => {
+app.get('*', staticLimiter, (req, res) => {
   if (!req.path.startsWith('/api')) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   }
