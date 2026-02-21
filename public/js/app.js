@@ -33,7 +33,6 @@
     renderProjectSelector();
     await loadConversations();
     renderBackendSelector();
-    renderModelSelector();
 
     // Show empty state
     ChatUI.showEmptyState();
